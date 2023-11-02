@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+
 <style>
     @media print {
         body * {
@@ -66,95 +67,98 @@
         color: beige;
     }
 </style>
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex">
+            <div class="mr-3">
+                <!-- Date range calendar input -->
 
-<div class="d-flex justify-content-between align-items-center">
-    <div class="d-flex">
-        <div class="mr-3">
-            <!-- Date range calendar input -->
+                <div id="reportrange"
+                    style="cursor: pointer; padding: 5px 10px;  width: 40;  color: #010101!important; background-color: white;">
+                    <i class="fa fa-calendar"></i>&nbsp;
+                    <span></span> <i class="fa fa-caret-down"></i>
+                </div>
+            </div>
+            <a href="{% url 'customize_expenseproject_report' %}" style="margin-left: 30px;"
+                onclick="redirectToNextPage()">Customize report <i class="fa fa-cog"></i></a>
+        </div>
+        <div class="d-flex">
+            <!-- Print button -->
+            <button class="btn btn-light mr-2" id="pdf" onclick="display()">Print</button>
+            <div style="width: 3px;"></div>
+            <div class="dropdown">
+                <button class="btn btn-light mr-3 dropdown-toggle" type="button" id="exportDropdown"
+                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Export
+                </button>
+                <div class="dropdown-menu" aria-labelledby="exportDropdown">
+                    <a class="dropdown-item" href="#" onclick="exportToExcel()">XLS (Excel)</a>
+                </div>
 
-            <div id="reportrange"
-                style="cursor: pointer; padding: 5px 10px;  width: 40;  color: #010101!important; background-color: white;">
-                <i class="fa fa-calendar"></i>&nbsp;
-                <span></span> <i class="fa fa-caret-down"></i>
+                <a class="btn btn-light" href="#" onclick="exportAsPDF()">PDF</a>
+
+                <a href="{% url 'report_inventory_view' %}" class="btn btn-light" style=" color: rgb(1, 1, 1);">
+                    <i class="fa fa-times-circle"></i>
+                </a>
             </div>
         </div>
-        <a href="{% url 'customize_expenseemployee_report' %}" style="margin-left: 30px;">Customize report <i
-                class="fa fa-cog"></i></a>
     </div>
-    <div class="d-flex">
-        <!-- Print button -->
-        <button class="btn btn-light mr-2" id="pdf" onclick="display()">Print</button>
-        <div style="width: 3px;"></div>
-        <div class="dropdown">
-            <button class="btn btn-light mr-3 dropdown-toggle" type="button" id="exportDropdown"
-                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Export
-            </button>
-            <div class="dropdown-menu" aria-labelledby="exportDropdown">
-                <a class="dropdown-item" href="#" onclick="exportToExcel()">XLS (Excel)</a>
+    <div class="printable-wrapper" id="container-to-print">
+
+        <div class="printable-content">
+            <center>
+                <h2 class="text" style="color: white;">{{ company.company_name }}</h2>
+                <h4 class="text" style="color: white;">Expense by Project</h4>
+                <p class="text" style="color: white;" id="date-range-display">From {{ start_date }} To {{ end_date }}
+                </p>
+
+                <!-- <p class="text" style="color: white;">From 21 Jan 2023 To 21 Jan 2024</p> -->
+            </center>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped mt-4">
+                    <thead>
+                        <tr>
+                            <th id="thclr">Customer Name</th>
+                            <th id="thclr">Project Name</th>
+                            <th id="thclr">Expense Count</th>
+                            <th id="thclr">Expense Amount</th>
+                            <th id="thclr">Expense Amount with tax</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in proj %}
+                        <tr>
+
+                            <td style="color: #ccc;">{{ i.c_name.customerName }}</td>
+                            <td style="color: #ccc;">{{ i.name}}</td>
+                            <td style="color: #ccc;">0</td>
+                            <td style="color: #ccc;">0</td>
+                            <td style="color: #ccc;">0</td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <td style="color: #ccc;">
+                                <h4>Total</h4>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
             </div>
-
-            <a class="btn btn-light" href="#" onclick="exportAsPDF()">PDF</a>
-
-            <a href="{% url 'report_inventory_view' %}" class="btn btn-light" style=" color: rgb(1, 1, 1);">
-                <i class="fa fa-times-circle"></i>
-            </a>
         </div>
     </div>
-</div>
-<div class="printable-wrapper" id="container-to-print">
 
-    <div class="printable-content">
-        <center>
-            <h2 class="text" style="color: white;">{{ company.company_name }}</h2>
-            <h4 class="text" style="color: white;">Expense by Employee</h4>
-            <p class="text" style="color: white;" id="date-range-display">From {{ start_date }} To {{ end_date }}</p>
-
-            <!-- <p class="text" style="color: white;">From 21 Jan 2023 To 21 Jan 2024</p> -->
-        </center>
-        <table class="table table-bordered table-striped mt-4">
-            <thead>
-                <tr>
-                    <th id="thclr">Employee Name</th>
-                    <th id="thclr">Employee Email.id</th>
-                    <th id="thclr">Distance</th>
-                    <th id="thclr">Expense Count</th>
-                    <th id="thclr">Amount</th>
-                    <th id="thclr">Amount with tax</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                {% for i in emplo %}
-                <tr>
-
-                    <td style="color: #ccc;">{{ i.first_name }}</td>
-                    <td style="color: #ccc;">{{ i.email }}</td>
-                    <td style="color: #ccc;">0</td>
-                    <td style="color: #ccc;">0</td>
-                    <td style="color: #ccc;">0</td>
-                    <td style="color: #ccc;">0</td>
-                    {% endfor %}
-                </tr>
-                <tr>
-                    <td style="color: #ccc;">
-                        <h4>Total</h4>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-
-                </tr>
-
-            </tbody>
-        </table>
+    <div class="printable-content mt-3">
+        <p style="color: rgb(2, 144, 4);">**Amount is displayed in your base currency: INR</p>
     </div>
-</div>
 
-<div class="printable-content mt-3">
-    <p style="color: rgb(2, 144, 4);">**Amount is displayed in your base currency: INR</p>
+
 </div>
 
 <script>
@@ -196,7 +200,7 @@
 
         const pdfOptions = {
             margin: 0,
-            filename: '{{company.company_name}} expense_by_employee.pdf',
+            filename: '{{company.company_name}} expensebyproject.pdf',
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2 },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
@@ -312,7 +316,10 @@
         adjustTableForPrint();
         window.print();
     });
+
+
 </script>
+
 
 
 {% endblock %}

@@ -891,8 +891,12 @@ urlpatterns = [
 
     path('expensebyemployee',views.expensebyemployee,name='expensebyemployee'),
     path('customize_expenseemployee_report',views.customize_expenseemployee_report,name='customize_expenseemployee_report'),
-    path('customize_expense_by_employee',views.customize_expense_by_employee,name='customize_expense_by_employee'),
     path('milege',views.milege,name='milege'),
+    path('expensebyproject',views.expensebyproject,name='expensebyproject'),
+    path('customize_expenseproject_report',views.customize_expenseproject_report,name='customize_expenseproject_report'),
+    path('expenseproject/<int:pk>',views.expenseproject,name='expenseproject'),
+    path('nonmilege',views.nonmilege,name='nonmilege'),
+    path('custmz_rprt_shw_hide',views.custmz_rprt_shw_hide,name='custmz_rprt_shw_hide'),
 
 
     #End

@@ -261,7 +261,7 @@
                 </div>
                 <div id="reportrange">
                     <input type="text" id="dateRangePicker" class="form-control"
-                        style="background-color: white!important;color:black!important;;width: 25vw;">
+                        style="background-color: white!important;color:black!important;width:25vw ;">
                 </div>
 
                 <div>
@@ -272,7 +272,7 @@
 
                 <div>
                     <select class="form-control custom-select-width"
-                        style=" color: black!important;width: 25vw;display: inline-block;">
+                        style=" color: black!important;width:25vw ;;display: inline-block;">
 
                         <option style="color: black;">All</option>
                         <option style="color: black;">Non-Billable</option>
@@ -291,7 +291,7 @@
                     <label for="status" class="form-lable" style="width:25vw ;color: white; ">Expense type</label>
 
                     <label for="status" class="form-lable"
-                        style="width:25vw;color: white; margin-left:5.5% ;">Milege</label>
+                        style="width:25vw;color: white; margin-left:5.5% ;">Non-Milege</label>
                     <!--<label class="pt-5 mb-3" style="color: beige;margin-left:389px;">Account</label>-->
                 </div>
                 <div class="form-row">
@@ -333,7 +333,7 @@
 
                 </div>
 
-                <br>
+                <br><br><br>
                 <div>
                     <a href="{% url 'expensebyemployee' %}" type="button" class="btn btn-primary">Run
                         Report</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -405,6 +405,7 @@
     </div>
 
     <script>
+
 $(function () {
                         // Retrieve the saved dates
                         var savedDates = JSON.parse(localStorage.getItem('selectedDates'));

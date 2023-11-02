@@ -1599,6 +1599,5 @@ class Attachgodown(models.Model):
     attachment= models.FileField(upload_to='attachment/', blank=True, null=True)
     
 
-class ExpenseByEmployee(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE,null=True)    
+  
 #End

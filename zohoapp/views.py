@@ -18592,23 +18592,37 @@ def cash_in_hand(request):
 
 # Expense by Employee
 def expensebyemployee(request):
-    #customer = customer.objects.all()
+    emplo=Payroll.objects.all()
     company_data = company_details.objects.get(user=request.user)
-    expense_employee=ExpenseByEmployee.objects.all()
-    return render(request,'expence_by_employee.html',{"company":company_data,"expense":expense_employee})
+    return render(request,'expence_by_employee.html',{"emplo":emplo,"company":company_data})
 
 def customize_expenseemployee_report(request):
-    expense=ExpenseByEmployee.objects.all()
-    company_data = company_details.objects.get(user=request.user)
-    return render(request,'customize_expense_by_employee.html',{'expense':expense,'company': company_data})
-
-
-def customize_expense_by_employee(request):
-    #user=request.user
-    #vendor=vendor_table.objects.all()
-    #company_data = company_details.objects.get(user=request.user)
-    #bills = PurchaseBillItems.objects.all()
-    return render(request,'customize_expense_by_employee.html')#,{'vendors':vendor,'company': company_data,'bills':bills})
+    return render(request,'customize_expense_by_employee.html')
 
 def milege(request):
-    return render(request,'expense_milege.html')   
+    return render(request,'expense_milege.html')
+
+def nonmilege(request):
+    return render(request,'expense_nonmilege.html')  
+
+#expense by project
+def expensebyproject(request):
+    cust = customer.objects.all()
+    proj=project1.objects.all()
+    company_data = company_details.objects.get(user=request.user)
+    return render(request,'expense_by_project.html',{"company":company_data,"cust":cust,'proj':proj}) 
+
+def expenseproject(request,pk):
+    cust=customer.objects.filter(id=pk)
+    proj=project1.objects.filter(id=pk)
+    return render(request,'expenseproject.html',{'cust':cust,"proj":proj})
+
+def customize_expenseproject_report(request):
+    cust = customer.objects.all()
+    proj=project1.objects.all()
+    return render(request,'customize_expensebyproject.html',{'cust':cust,"proj":proj})
+
+def custmz_rprt_shw_hide(request):
+    customer1 = customer.objects.all()
+    company= company_details.objects.get(user=request.user)
+    return render(request, 'custmz_rprt_shw_hide.html', {'cust': customer1, 'company': company},)    
