@@ -7594,6 +7594,25 @@ def chartofaccount_home(request):
     view=Chart_of_Account.objects.all()
     return render(request,"chartofaccount_home.html", {'view':view,'company':company})
 
+login_required(login_url='login')
+def view_chart_of_accounts_all(request):
+    view=Chart_of_Account.objects.all()
+    return render(request,'chartofaccount_home.html',{"view":view})   
+    
+login_required(login_url='login')
+def view_chart_of_accounts_active(request):
+    view=Chart_of_Account.objects.filter(status="active")
+    return render(request,'chartofaccount_home.html',{"view":view}) 
+
+login_required(login_url='login')
+def view_chart_of_accounts_none(request):
+    view=Chart_of_Account.objects.filter(status="None")
+    return render(request,'chartofaccount_home.html',{"view":view})
+
+def create_new_chart_of_account(request):
+    return render(request,'create_new_chart_of_account.html')     
+
+
 def create_account(request):
     if request.method=='POST':
         a=Chart_of_Account()

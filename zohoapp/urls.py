@@ -898,6 +898,11 @@ urlpatterns = [
     path('nonmilege',views.nonmilege,name='nonmilege'),
     path('custmz_rprt_shw_hide',views.custmz_rprt_shw_hide,name='custmz_rprt_shw_hide'),
 
+#----------------------------------------------------------------------------------------------------------
+    path('view_chart_of_accounts_all',views.view_chart_of_accounts_all,name='view_chart_of_accounts_all'),
+    path('view_chart_of_accounts_active',views.view_chart_of_accounts_active,name='view_chart_of_accounts_active'),
+    path('view_chart_of_accounts_none',views.view_chart_of_accounts_none,name='view_chart_of_accounts_none'),
+    path('create_new_chart_of_account',views.create_new_chart_of_account,name='create_new_chart_of_account'),
 
     #End
     
