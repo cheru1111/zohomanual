@@ -903,6 +903,7 @@ urlpatterns = [
     path('view_chart_of_accounts_active',views.view_chart_of_accounts_active,name='view_chart_of_accounts_active'),
     path('view_chart_of_accounts_none',views.view_chart_of_accounts_none,name='view_chart_of_accounts_none'),
     path('create_new_chart_of_account',views.create_new_chart_of_account,name='create_new_chart_of_account'),
+    path('edit_chart_of_account/<int:id>',views.edit_chart_of_account,name='edit_chart_of_account'),
 
     #End
     

@@ -8,7 +8,7 @@
     overflow: scroll;
   }
 
-  #aover {
+  a:hover {
     color: rgb(214, 141, 5);
   }
 
@@ -240,21 +240,71 @@
             </form>
           </div>
         </div>
-        <div class="dropdown">
-          <button class="btn btn-dark border-primary" style="color: #F86F03;height: 38px;" type="button"
-            id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa fa-filter"></i>
-          </button>
-          <ul class="dropdown-menu bg-dark" aria-labelledby="filterDropdown">
+        <div onclick="myFunction()">
+          <div class="dropdown">
+            <button class="btn btn-outline-warning text-right px-3 py-2" style="height: 38px;" type="button"
+              id="myInput"
+              onkeyup="filterFunction()">
+              <i class="fa fa-filter"></i>
+            </button>
+            <div class="content" id="myDropdown">
+              <!--<div class="search">
+                <input type="text" placeholder="search" id="myInput" onkeyup="filterFunction()">
+              </div>-->
+              <ul class="options">
+                <div class="opt">
+                  <span style="font-weight: bold;">Assets</span>
+                  <li>Other Assets </li>
+                  <li>Other Current Asset</li>
+                  <li>Cash </li>
+                  <li>Bank </li>
+                  <li>Fixed Asset</li>
+                  <li>Stock </li>
+                  <li>Payment Clearing </li>
+
+                </div>
+
+                <div class="opt">
+                  <span style="font-weight: bold;">Liability</span>
+                  <li>Other Liability </li>
+                  <li>Other Current Liability</li>
+                  <li>Credit Card</li>
+                  <li>Long Term Liability</li>
+                  <li>Overseas Tax Pyable</li>
+                </div>
+
+                <div class="opt">
+                  <span style="font-weight: bold;">Equity</span>
+                  <li>Equity</li>
+                </div>
+
+                <div class="opt">
+                  <span style="font-weight: bold;">Income</span>
+                  <li>Income</li>
+                  <li>Other Income</li>
+                </div>
+
+                <div class="opt">
+                  <span style="font-weight: bold;">Expense</span>
+                  <li>Expense</li>
+                  <li>Cost Of Goods Sold</li>
+                  <li>Other Expense</li>
+                </div>
+              </ul>
+
+
+            </div>
+          </div>
+          <!--<ul class="dropdown-menu bg-dark" aria-labelledby="filterDropdown">
             <li><a class="dropdown-item custom-item text-light" href="{% url 'journal_list' %}">All</a></li>
             <li><a class="dropdown-item custom-item text-light" href="{% url 'journal_list' %}?filter=draft">Draft</a>
             </li>
             <li><a class="dropdown-item custom-item text-light"
                 href="{% url 'journal_list' %}?filter=published">Save</a></li>
-          </ul>
+          </ul>-->
         </div>
-        <a href="{% url 'create_new_chart_of_account' %}" class="btn btn-dark border-primary"
-          style="color: #F86F03;height: 38px;"><i class="fa fa-plus"></i></a>
+        <a href="{% url 'create_new_chart_of_account' %}" class="btn btn-outline-warning text-right px-3 py-2"
+          style="height: 38px;"><i class="fa fa-plus"></i></a>
       </div>
     </div>
   </div>
@@ -279,11 +329,7 @@
 <div class="row">
   <div class="col-sm-4">
     <div class="row  mx-2">
-      <div class="col-md-10"><a class="text-white" style="font-size: 1.3rem;"> All Accounts</a></div>
       <div class="col-md-2 form-inline justify-content-end py-2">
-        <a href="" data-toggle="modal" data-target="#create_account" class="btn btn-warning"
-          style="text-decoration: none;">New</a>
-
       </div>
     </div>
     <div class="row">
@@ -364,13 +410,13 @@
 
       </div>
     </div>
-    <div class="row mt-2">
+    <!--<div class="row mt-2">
       <div class="col-sm-12">
         <input type="text" id="myyInput" onkeyup="myyFunction()" placeholder="search by account name"
           style="border-radius: 5px;width: 100%;background-color: transparent;color: white;border: 1px solid gray;text-align: center;">
 
       </div>
-    </div>
+    </div>-->
 
 
 
@@ -515,7 +561,7 @@
   </div>
   <div class="col-sm-8">
 
-    <div class="row  mx-1 py-3" style="background-color: rgba(252, 236, 217, 0.8)">
+    <div class="row  mx-1 py-3 p-3 mb-2 bg-warning">
       <div class="col-sm-5 text-dark" style="font-size: 2.5rem;">
         <div class="col-sm-6 ">
           <!-- {% if ind.status == "active" %}
@@ -535,42 +581,51 @@
 
         </div>
       </div>
-      <div class="col-sm-7 text-white text-right my-auto">
+      <div class="col-sm-7 p-4 text-white text-right my-auto">
         <div class="btn-group" role="group" aria-label="Basic example">
-          <a href="" data-toggle="modal" data-target="#edit_account" class="btn btn-dark m-1 text-white" title="Edit">
+          <a href="" data-toggle="modal" data-target="#edit_account" class="btn btn-outline-dark text-right px-3 py-2"
+            title="Edit">
             <i class="mdi mdi-pencil"></i></a>
-          <a href="" class="btn btn-dark m-1 text-white " data-toggle="modal" data-target="#upload_account"
+          <a href="" class="btn btn-outline-dark text-right px-3 py-2" data-toggle="modal" data-target="#upload_account"
             title="Upload" id="pdf">
             <i class="mdi mdi-file-pdf-box"></i></a>
           <!-- {% if estimate.attachment != ""%} -->
-          <a href="" class="btn btn-dark m-1 text-white" data-toggle="modal" data-target="#download_account"
-            title="Download Attached File">
+          <a href="" class="btn btn-outline-dark text-right px-3 py-2" data-toggle="modal"
+            data-target="#download_account" title="Download Attached File">
             <span class="mdi mdi-download"></span></a>
           <!-- {%endif%} -->
-          <a href="" onclick="printForm()" class="btn btn-dark m-1 text-white btn_print" data-toggle="tooltip"
+          <a href="" onclick="printForm()" class="btn btn-outline-dark text-right px-3 py-2" data-toggle="tooltip"
             title="Print">
             <i class="mdi mdi-printer"></i></a>
-          <a href="" class="btn btn-dark m-1 text-white" data-toggle="tooltip" title="Email">
+          <a href="" class="btn btn-outline-dark text-right px-3 py-2" data-toggle="tooltip" title="Email">
             <i class="mdi mdi-email"></i></a>
 
-
-
-
+          <a href="" class="btn btn-outline-dark text-right px-3 py-2"
+            onclick="return confirm('Do you want to Delete this Estimate?');"><i class="mdi mdi-delete"></i></a>
         </div>
-
-        <a href="" class="btn btn-dark text-white" onclick="return confirm('Do you want to Delete this Estimate?');"><i
-            class="mdi mdi-delete"></i></a>
       </div>
     </div>
 
 
-    <div class="slip p-5 mx-1 convert_to_pdf bg-light" id="selected-area"
+    <div class="slip pt-3 p-5 mx-1 convert_to_pdf bg-light" id="selected-area"
       style="box-shadow: 5px 5px 10px rgb(45, 45, 45);">
 
 
 
       <hr>
-      <div class="row ">
+
+
+      <h4 class="text-dark text-center" style="text-transform: uppercase;">{{ind.account_name}}
+        {% if ind.status == "active" %}
+        <input type="radio" title="active" style="accent-color: rgb(4, 209, 4);" checked readonly>
+        {% else %}
+        <input type="radio" title="inactive" style="accent-color: red;" checked readonly>
+        {% endif %}
+      </h4>
+      <h6 class="text-dark text-center">{{ind.account_type}}</h6><br><br>
+
+
+      <div class="row">
         <div class="col-sm-6 mt-auto">
           <h6 class="text-dark">CLOSING BALANCE</h6>
           <h3 class="text-dark">₹0.00</h3>

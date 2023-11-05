@@ -7610,7 +7610,11 @@ def view_chart_of_accounts_none(request):
     return render(request,'chartofaccount_home.html',{"view":view})
 
 def create_new_chart_of_account(request):
-    return render(request,'create_new_chart_of_account.html')     
+    return render(request,'create_new_chart_of_account.html') 
+
+def edit_chart_of_account(request,id):
+    view=Chart_of_Account.objects.filter(id=id)
+    return render(request,'edit_chart_of_account.html',{"view":view})        
 
 
 def create_account(request):
