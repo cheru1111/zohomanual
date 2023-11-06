@@ -226,93 +226,145 @@
 
 
 </script>
+
 <h2 class="mb text-white" style="margin-left: 8px;"> All Accounts</h2>
-<!-- </div> -->
+
 <div class="container-fluid mt-4">
   <div class="row">
-    <div class="col-md-4 vertical-separator">
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="search-bar">
-          <div class="col-md-12">
-            <form action="" method="GET" class="input-group">
-              <input type="text" id="myyInput" onkeyup="myyFunction()" placeholder="Search..."
-                class="form-control custom-height text-dark">
-            </form>
+      <div class="col-md-4 vertical-separator">
+          <div class="d-flex justify-content-between align-items-center">
+              <div class="search-bar">
+                  <form action="" method="GET" class="input-group">
+                      <input type="text" id="myyInput" onkeyup="myyFunction()" placeholder="Search..."
+                          class="form-control custom-height text-dark">
+                  </form>
+              </div>
+
+              <div class="filter-button" onclick="toggleDropdown()">
+                  <button class="btn btn-outline-warning text-right px-3 py-2" style="height: 38px;" type="button" >
+                      <i class="fa fa-filter"></i>
+                  </button>
+                  <div class="content" id="myDropdown" style="width: 300px;">
+                      <div class="search">
+                          <input type="text" placeholder="Search" id="myInput" onkeyup="filterFunction()">
+                      </div>
+                      <ul class="options">
+                          <!-- Your filter options here -->
+                          <div class="opt">
+                            <span style="font-weight: bold;">Assets</span>
+                            <li>Other Assets </li>
+                            <li>Other Current Asset</li>
+                            <li>Cash </li>
+                            <li>Bank </li>
+                            <li>Fixed Asset</li>
+                            <li>Stock </li>
+                            <li>Payment Clearing </li>
+            
+                          </div>
+            
+                          <div class="opt">
+                            <span style="font-weight: bold;">Liability</span>
+                            <li>Other Liability </li>
+                            <li>Other Current Liability</li>
+                            <li>Credit Card</li>
+                            <li>Long Term Liability</li>
+                            <li>Overseas Tax Pyable</li>
+                          </div>
+            
+                          <div class="opt">
+                            <span style="font-weight: bold;">Equity</span>
+                            <li>Equity</li>
+                          </div>
+            
+                          <div class="opt">
+                            <span style="font-weight: bold;">Income</span>
+                            <li>Income</li>
+                            <li>Other Income</li>
+                          </div>
+            
+                          <div class="opt">
+                            <span style="font-weight: bold;">Expense</span>
+                            <li>Expense</li>
+                            <li>Cost Of Goods Sold</li>
+                            <li>Other Expense</li>
+                          </div>
+                      </ul>
+                  </div>
+              </div>
+
+              <a href="{% url 'create_new_chart_of_account' %}" class="btn btn-outline-warning text-right px-3 py-2"
+                  style="height: 38px;">
+                  <i class="fa fa-plus"></i>
+              </a>
           </div>
-        </div>
-        <div onclick="myFunction()">
-          <div class="dropdown">
-            <button class="btn btn-outline-warning text-right px-3 py-2" style="height: 38px;" type="button"
-              id="myInput"
-              onkeyup="filterFunction()">
-              <i class="fa fa-filter"></i>
-            </button>
-            <div class="content" id="myDropdown">
-              <!--<div class="search">
-                <input type="text" placeholder="search" id="myInput" onkeyup="filterFunction()">
-              </div>-->
-              <ul class="options">
-                <div class="opt">
-                  <span style="font-weight: bold;">Assets</span>
-                  <li>Other Assets </li>
-                  <li>Other Current Asset</li>
-                  <li>Cash </li>
-                  <li>Bank </li>
-                  <li>Fixed Asset</li>
-                  <li>Stock </li>
-                  <li>Payment Clearing </li>
-
-                </div>
-
-                <div class="opt">
-                  <span style="font-weight: bold;">Liability</span>
-                  <li>Other Liability </li>
-                  <li>Other Current Liability</li>
-                  <li>Credit Card</li>
-                  <li>Long Term Liability</li>
-                  <li>Overseas Tax Pyable</li>
-                </div>
-
-                <div class="opt">
-                  <span style="font-weight: bold;">Equity</span>
-                  <li>Equity</li>
-                </div>
-
-                <div class="opt">
-                  <span style="font-weight: bold;">Income</span>
-                  <li>Income</li>
-                  <li>Other Income</li>
-                </div>
-
-                <div class="opt">
-                  <span style="font-weight: bold;">Expense</span>
-                  <li>Expense</li>
-                  <li>Cost Of Goods Sold</li>
-                  <li>Other Expense</li>
-                </div>
-              </ul>
-
-
-            </div>
-          </div>
-          <!--<ul class="dropdown-menu bg-dark" aria-labelledby="filterDropdown">
-            <li><a class="dropdown-item custom-item text-light" href="{% url 'journal_list' %}">All</a></li>
-            <li><a class="dropdown-item custom-item text-light" href="{% url 'journal_list' %}?filter=draft">Draft</a>
-            </li>
-            <li><a class="dropdown-item custom-item text-light"
-                href="{% url 'journal_list' %}?filter=published">Save</a></li>
-          </ul>-->
-        </div>
-        <a href="{% url 'create_new_chart_of_account' %}" class="btn btn-outline-warning text-right px-3 py-2"
-          style="height: 38px;"><i class="fa fa-plus"></i></a>
       </div>
-    </div>
   </div>
 </div>
 
 
 
+<script>
+  function toggleDropdown() {
+    var dropdown = document.getElementById("myDropdown");
+    if (dropdown.style.display === "block") {
+      dropdown.style.display = "none";
+    } else {
+      dropdown.style.display = "block";
+    }
+  }
+</script>
+<script>
+  function filterFunction() {
+      var input, filter, ul, li, a, i;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      ul = document.querySelector(".options");
+      li = ul.getElementsByTagName("li");
+      for (i = 0; i < li.length; i++) {
+          a = li[i];
+          if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+              li[i].style.display = "";
+          } else {
+              li[i].style.display = "none";
+          }
+      }
+  }
+  </script>
+<script>
+  function filterFunction() {
+    var input, filter, ul, li, a, i, b, j;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    div = document.getElementById("myDropdown");
+    a = div.getElementsByClassName('opt');
 
+    b = div.getElementsByTagName('li');
+    //   a = div.getElementsByClassName('li');
+
+    // b = div.getElementsByTagName('a');
+
+
+    for (i = 0; i < a.length; i++) {
+      txtValue = a[i].textContent || a[i].innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        a[i].style.display = "";
+      }
+      else {
+        a[i].style.display = "none";
+      }
+    }
+    for (j = 0; j < b.length; j++) {
+      txtValue = b[j].textContent || b[j].innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        b[j].style.display = "";
+      }
+      else {
+        b[j].style.display = "none";
+      }
+    }
+
+  }
+</script>
 
 
 
@@ -334,7 +386,7 @@
     </div>
     <div class="row">
       <div class="col-sm-12">
-        <div class="select-box" onclick="myFunction()">
+        <!--<div class="select-box" onclick="myFunction()">
           <div class="select-option">
             <input type="text" placeholder="Filter by Account Type" id="soValue" readonly>
           </div>
@@ -386,7 +438,7 @@
 
 
           </div>
-        </div>
+        </div>-->
         <script>
           const selectBox = document.querySelector('.select-box');
           const selectOption = document.querySelector('.select-option');
@@ -583,7 +635,7 @@
       </div>
       <div class="col-sm-7 p-4 text-white text-right my-auto">
         <div class="btn-group" role="group" aria-label="Basic example">
-          <a href="" data-toggle="modal" data-target="#edit_account" class="btn btn-outline-dark text-right px-3 py-2"
+          <a href="{% url 'edit_chart_of_account' view.id %}" data-toggle="modal" data-target="#edit_account" class="btn btn-outline-dark text-right px-3 py-2"
             title="Edit">
             <i class="mdi mdi-pencil"></i></a>
           <a href="" class="btn btn-outline-dark text-right px-3 py-2" data-toggle="modal" data-target="#upload_account"
@@ -3817,7 +3869,7 @@
     }
   }
 </script>
-<script>
+<!--<script>
   function myyFunction() {
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("myyInput");
@@ -3837,10 +3889,10 @@
       }
     }
   }
-</script>
+</script>-->
 
 
-<script>
+<!--<script>
   function filterFunction() {
     var input, filter, ul, li, a, i, b, j;
     input = document.getElementById("myInput");
@@ -3905,7 +3957,7 @@
     }
 
   }
-</script>
+</script>-->
 
 
 

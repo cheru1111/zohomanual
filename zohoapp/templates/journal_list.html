@@ -80,27 +80,29 @@
     border-radius: 5px;
     padding: 5px;
   }
+
   @media print {
     body:not(.print-mode) * {
       display: none !important;
     }
   }
+
   .blue-container {
-        background-color: #DEB887; 
-        /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-        padding: 30px;
-        /* border-radius: 10px;  */
-    }
-    #container {
-      box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5); 
-    }
-   
+    background-color: #DEB887;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    padding: 30px;
+    /* border-radius: 10px;  */
+  }
+
+  #container {
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+  }
 </style>
 <section>
   <!-- <h1 class="text-white m-2">Manual Journal</h1>
   <br> -->
   <!-- <div class="row" style="top: 7rem;"> -->
-    <h2 class="mb text-white" style="margin-left: 8px;">Manual Journal</h2>
+  <h2 class="mb text-white" style="margin-left: 8px;">Manual Journal</h2>
   <!-- </div> -->
   <div class="container-fluid mt-4">
     <div class="row">
@@ -108,14 +110,14 @@
         <div class="d-flex justify-content-between align-items-center">
           <div class="search-bar">
             <div class="col-md-12">
-            <form action="{% url 'journal_list' %}" method="GET" class="input-group">
-              <input type="text" name="query" placeholder="Search..." class="form-control custom-height text-dark">
-            </form>
+              <form action="{% url 'journal_list' %}" method="GET" class="input-group">
+                <input type="text" name="query" placeholder="Search..." class="form-control custom-height text-dark">
+              </form>
             </div>
-        </div>
+          </div>
           <div class="dropdown">
-            <button class="btn btn-dark border-primary" style="color: #F86F03;" type="button"
-            id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-dark border-primary" style="color: #F86F03;" type="button" id="filterDropdown"
+              data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fa fa-filter"></i>
             </button>
             <ul class="dropdown-menu bg-dark" aria-labelledby="filterDropdown">
@@ -123,11 +125,11 @@
               <li><a class="dropdown-item custom-item text-light" href="{% url 'journal_list' %}?filter=draft">Draft</a>
               </li>
               <li><a class="dropdown-item custom-item text-light"
-                href="{% url 'journal_list' %}?filter=published">Published</a></li>
-              </ul>
-            </div>
-            <a href="{% url 'add_journal' %}" class="btn btn-dark border-primary"
-              style="color: #F86F03;"><i class="fa fa-plus"></i></a>
+                  href="{% url 'journal_list' %}?filter=save">Save</a></li>
+            </ul>
+          </div>
+          <a href="{% url 'add_journal' %}" class="btn btn-dark border-primary" style="color: #F86F03;"><i
+              class="fa fa-plus"></i></a>
         </div>
         <hr>
         <div class="list-group mt-3">
@@ -142,8 +144,8 @@
               <span>{{ journal.journal_no }}</span>
               {% if journal.status == 'draft' %}
               <span class="status draft" style="color: orangered;">{{ journal.status }}</span>
-              {% elif journal.status == 'published' %}
-              <span class="status published text-success">{{ journal.status }}</span>
+              {% elif journal.status == 'save' %}
+              <span class="status save text-success">{{ journal.status }}</span>
               {% else %}
               <span class="status">{{ journal.status }}</span>
               {% endif %}
@@ -156,17 +158,25 @@
       <div class="col-md-8">
         <div class="d-flex justify-content-between align-items-center">
           <div>
-            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-overview">Overview</button>
-            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-template">Template</button>
+            <button style="background-color: rgb(210, 132, 30); color: white;"
+              class="btn btn-overview">Overview</button>
+            <button style="background-color: rgb(210, 132, 30); color: white;"
+              class="btn btn-template">Template</button>
           </div>
           <div>
-            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-publish">Publish</button>
-            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-comment" data-toggle="modal" data-target="#commentModal"><i class="fa fa-comments" aria-hidden="true"></i></button>
-            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-edit"><i class="fa fa-edit" aria-hidden="true"></i></button>
-            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-save-pdf"><i class="fa fa-file-pdf" aria-hidden="true"></i></button>
-            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-print"><i class="fa fa-print" aria-hidden="true"></i></button>
-            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-attachment"><i class="fa fa-paperclip" aria-hidden="true"></i></button>
-            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-save">Save</button>
+            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-comment"
+              data-toggle="modal" data-target="#commentModal"><i class="fa fa-comments" aria-hidden="true"></i></button>
+            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-edit"><i
+                class="fa fa-edit" aria-hidden="true"></i></button>
+            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-save-pdf"><i
+                class="fa fa-file-pdf" aria-hidden="true"></i></button>
+            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-print"><i
+                class="fa fa-print" aria-hidden="true"></i></button>
+            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-attachment"><i
+                class="fa fa-paperclip" aria-hidden="true"></i></button>
+            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-delete"><i
+                class="fa fa-trash" aria-hidden="true"></i></button>
           </div>
         </div>
         <hr class="mt-4">
@@ -184,7 +194,8 @@
     </div>
   </div>
 </section>
-<div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true">
+<div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content bg-dark text-white">
       <div class="modal-header">
@@ -348,7 +359,7 @@
       });
     }
 
-    $('.btn-publish').click(function () {
+    $('.btn-save').click(function () {
       const selectedJournalId = $('.list-item.active').data('journal-id');
       if (selectedJournalId) {
         updateJournalStatus(selectedJournalId);
@@ -358,22 +369,22 @@
     });
 
     $(document).on('click', '.btn-comment', function () {
-  const selectedJournalId = $('.list-item.active').data('journal-id');
+      const selectedJournalId = $('.list-item.active').data('journal-id');
 
-  if (selectedJournalId) {
-    $.ajax({
-      url: `/get_journal_comments/${selectedJournalId}/`,
-      method: 'GET',
-      dataType: 'json',
-      success: function (data) {
-    const commentModal = $('#commentModal');
-    const existingCommentsSection = commentModal.find('.existing-comments');
-    existingCommentsSection.empty();
+      if (selectedJournalId) {
+        $.ajax({
+          url: `/get_journal_comments/${selectedJournalId}/`,
+          method: 'GET',
+          dataType: 'json',
+          success: function (data) {
+            const commentModal = $('#commentModal');
+            const existingCommentsSection = commentModal.find('.existing-comments');
+            existingCommentsSection.empty();
 
-        let commentCounter = 1;
-        data.comments.forEach(comment => {
-          const deleteButton = data.is_current_user_comment ? `<button class="btn btn-sm btn-danger m-1 btn-delete-comment" data-comment-id="${comment.id}"><i class="fa fa-trash"></i></button>` : '';
-          const commentHtml = `
+            let commentCounter = 1;
+            data.comments.forEach(comment => {
+              const deleteButton = data.is_current_user_comment ? `<button class="btn btn-sm btn-danger m-1 btn-delete-comment" data-comment-id="${comment.id}"><i class="fa fa-trash"></i></button>` : '';
+              const commentHtml = `
             <div class="comment d-flex justify-content-between">
               <div class="d-flex">
               <div class="comment-number">${commentCounter}.</div>
@@ -385,21 +396,21 @@
               </div>
             </div>
           `;
-          existingCommentsSection.append(commentHtml);
-          commentCounter++;
-        });
+              existingCommentsSection.append(commentHtml);
+              commentCounter++;
+            });
 
-        // Open the comment modal
-        commentModal.modal('show');
-      },
-      error: function (error) {
-        console.error('Error fetching existing comments:', error);
+            // Open the comment modal
+            commentModal.modal('show');
+          },
+          error: function (error) {
+            console.error('Error fetching existing comments:', error);
+          }
+        });
+      } else {
+        console.error('No journal item selected for adding a comment.');
       }
     });
-  } else {
-    console.error('No journal item selected for adding a comment.');
-  }
-});
 
     // Handler for the "Save Comment" button click
     $(document).on('click', '.btn-save-comment', function () {
@@ -470,7 +481,7 @@
     $('#commentModal').on('hidden.bs.modal', function (e) {
       $('body').removeClass('modal-open');
     });
-  
+
     $('.btn-edit').click(function () {
       const selectedJournalId = $('.list-item.active').data('journal-id');
 
@@ -483,49 +494,49 @@
     });
 
     $('.btn-delete').click(function () {
-  const selectedJournalId = $('.list-item.active').data('journal-id');
+      const selectedJournalId = $('.list-item.active').data('journal-id');
 
-  if (selectedJournalId) {
-    // Show a confirmation dialog before proceeding with deletion
-    if (confirm("Are you sure you want to delete this journal?")) {
-      // AJAX call to delete the journal and its entries
-      $.ajax({
-        url: `/delete_journal/${selectedJournalId}/`,
-        method: 'POST',
-        dataType: 'json',
-        data: {
-          csrfmiddlewaretoken: '{{ csrf_token }}',
-        },
-        success: function (data) {
-          // After successful deletion, reload the journal list to remove the deleted journal from the list
-          window.location.reload();
-        },
-        error: function (error) {
-          console.error('Error deleting the journal:', error);
+      if (selectedJournalId) {
+        // Show a confirmation dialog before proceeding with deletion
+        if (confirm("Are you sure you want to delete this journal?")) {
+          // AJAX call to delete the journal and its entries
+          $.ajax({
+            url: `/delete_journal/${selectedJournalId}/`,
+            method: 'POST',
+            dataType: 'json',
+            data: {
+              csrfmiddlewaretoken: '{{ csrf_token }}',
+            },
+            success: function (data) {
+              // After successful deletion, reload the journal list to remove the deleted journal from the list
+              window.location.reload();
+            },
+            error: function (error) {
+              console.error('Error deleting the journal:', error);
+            }
+          });
         }
-      });
-    }
-  } else {
-    console.error('No journal item selected for deleting.');
-  }
-});
+      } else {
+        console.error('No journal item selected for deleting.');
+      }
+    });
 
-document.querySelector('.btn-save-pdf').addEventListener('click', function () {
-    const element = document.getElementById('container'); 
+    document.querySelector('.btn-save-pdf').addEventListener('click', function () {
+      const element = document.getElementById('container');
 
-   
-    const pdfOptions = {
-      margin: 10,
-      filename: 'journal.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    };
 
-    html2pdf().from(element).set(pdfOptions).save();
-  });
+      const pdfOptions = {
+        margin: 10,
+        filename: 'journal.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      };
 
-  $('.btn-print').click(function () {
+      html2pdf().from(element).set(pdfOptions).save();
+    });
+
+    $('.btn-print').click(function () {
       const detailsSection = $('.details-section');
 
       // Get the HTML content of the details-section
@@ -576,34 +587,34 @@ document.querySelector('.btn-save-pdf').addEventListener('click', function () {
       };
     });
 
-  $('.btn-attachment').click(function () {
-    const selectedJournalId = $('.list-item.active').data('journal-id');
+    $('.btn-attachment').click(function () {
+      const selectedJournalId = $('.list-item.active').data('journal-id');
 
-    if (selectedJournalId) {
+      if (selectedJournalId) {
         $.ajax({
-            url: `/get_journal_attachment/${selectedJournalId}/`,
-            method: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                if (data.attachment_url) {
-                    // Create a download link and trigger the click event to initiate download
-                    const link = document.createElement('a');
-                    link.href = data.attachment_url;
-                    link.download = 'attachment-file-name.ext'; // Replace with the actual file name
-                    link.click();
-                } else {
-                    // Show a tooltip or an alert indicating that there is no attachment
-                    alert('No attachment found.');
-                }
-            },
-            error: function (error) {
-                console.error('Error fetching journal attachment:', error);
+          url: `/get_journal_attachment/${selectedJournalId}/`,
+          method: 'GET',
+          dataType: 'json',
+          success: function (data) {
+            if (data.attachment_url) {
+              // Create a download link and trigger the click event to initiate download
+              const link = document.createElement('a');
+              link.href = data.attachment_url;
+              link.download = 'attachment-file-name.ext'; // Replace with the actual file name
+              link.click();
+            } else {
+              // Show a tooltip or an alert indicating that there is no attachment
+              alert('No attachment found.');
             }
+          },
+          error: function (error) {
+            console.error('Error fetching journal attachment:', error);
+          }
         });
-    } else {
+      } else {
         console.error('No journal item selected for downloading attachment.');
-    }
-});
+      }
+    });
 
 
     $('.btn-overview').click(function () {
@@ -662,10 +673,10 @@ document.querySelector('.btn-save-pdf').addEventListener('click', function () {
     </footer>
   </div>
     `;
-          $('.details-section').hide();
-          $('.details-section').empty(); 
-          $('.overview-section').html(overviewContent);
-          $('.overview-section').show();
+            $('.details-section').hide();
+            $('.details-section').empty();
+            $('.overview-section').html(overviewContent);
+            $('.overview-section').show();
           },
           error: function (error) {
             console.error('Error fetching journal details for overview:', error);
@@ -681,13 +692,13 @@ document.querySelector('.btn-save-pdf').addEventListener('click', function () {
         if (selectedJournalId) {
           loadJournalDetails(selectedJournalId);
           $('.overview-section').hide();
-          $('.overview-section').empty(); 
+          $('.overview-section').empty();
           $('.details-section').show();
         } else {
           console.error('No journal item selected for template.');
         }
       });
-      
+
     });
   });
 </script>

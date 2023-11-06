@@ -1412,7 +1412,7 @@ class LoanAttach(models.Model):
 class Journal(models.Model):
     STATUS_CHOICES = (
         ('draft', 'Draft'),
-        ('published', 'Published'),
+        ('save', 'Save'),
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     date = models.DateField()

@@ -7613,7 +7613,7 @@ def create_new_chart_of_account(request):
     return render(request,'create_new_chart_of_account.html') 
 
 def edit_chart_of_account(request,id):
-    view=Chart_of_Account.objects.filter(id=id)
+    view=Chart_of_Account.objects.get(id=id)
     return render(request,'edit_chart_of_account.html',{"view":view})        
 
 
@@ -14643,8 +14643,8 @@ def manual_journal_home(request):
 
     if filter_type == 'draft':
         journals = journals.filter(status='draft')
-    elif filter_type == 'published':
-        journals = journals.filter(status='published')
+    elif filter_type == 'save':
+        journals = journals.filter(status='save')
 
     try:
         company = company_details.objects.get(user=request.user)
@@ -14793,8 +14793,8 @@ def journal_list(request):
     if filter_param:
         if filter_param == 'draft':
             journals = journals.filter(status='draft')
-        elif filter_param == 'published':
-            journals = journals.filter(status='published')
+        elif filter_param == 'save':
+            journals = journals.filter(status='save')
 
     journal_id = request.GET.get('journal_id')
     selected_journal = None
