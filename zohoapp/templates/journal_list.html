@@ -106,7 +106,7 @@
   <!-- </div> -->
   <div class="container-fluid mt-4">
     <div class="row">
-      <div class="col-md-4 vertical-separator">
+      <div class="col-md-4 vertical-separator" >
         <div class="d-flex justify-content-between align-items-center">
           <div class="search-bar">
             <div class="col-md-12">
@@ -124,15 +124,15 @@
               <li><a class="dropdown-item custom-item text-light" href="{% url 'journal_list' %}">All</a></li>
               <li><a class="dropdown-item custom-item text-light" href="{% url 'journal_list' %}?filter=draft">Draft</a>
               </li>
-              <li><a class="dropdown-item custom-item text-light"
-                  href="{% url 'journal_list' %}?filter=save">Save</a></li>
+              <li><a class="dropdown-item custom-item text-light" href="{% url 'journal_list' %}?filter=save">Save</a>
+              </li>
             </ul>
           </div>
           <a href="{% url 'add_journal' %}" class="btn btn-dark border-primary" style="color: #F86F03;"><i
               class="fa fa-plus"></i></a>
         </div>
         <hr>
-        <div class="list-group mt-3">
+        <div class="list-group mt-3" id="slipTemplate">
           {% for journal in journals %}
           <a href="#" class="list-item {% if selected_journal_id == journal.id %}active{% endif %}"
             data-journal-id="{{ journal.id }}">
@@ -163,7 +163,9 @@
             <button style="background-color: rgb(210, 132, 30); color: white;"
               class="btn btn-template">Template</button>
           </div>
+
           <div>
+
             <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-save">Save</button>
             <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-comment"
               data-toggle="modal" data-target="#commentModal"><i class="fa fa-comments" aria-hidden="true"></i></button>
@@ -177,7 +179,26 @@
                 class="fa fa-paperclip" aria-hidden="true"></i></button>
             <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-delete"><i
                 class="fa fa-trash" aria-hidden="true"></i></button>
+            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-slip"><i
+                class="fa fa-file-text" aria-hidden="true"></i> Slip</button>
           </div>
+          <script>
+            document.addEventListener("DOMContentLoaded", function () {
+              const slipButton = document.querySelector('.btn-slip');
+              const slipTemplate = document.getElementById('slipTemplate');
+
+              slipButton.addEventListener('click', function () {
+                // Display the slip template
+                slipTemplate.style.display = 'block';
+
+                // Print the slip
+                window.print();
+
+                // Hide the slip template after printing
+                slipTemplate.style.display = 'none';
+              });
+            });
+          </script>
         </div>
         <hr class="mt-4">
         <div class="">

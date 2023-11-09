@@ -11,6 +11,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
 <style>
   .custom-form {
     max-width: 900px;
@@ -52,14 +55,12 @@
 <section style="height: 350vh; overflow: auto;background-color:  #191C24;">
   <div class="container">
     <div class="row justify-content-center">
-      <!-- <div class="card radius-15">
-              <div class="card-body">
-                  <div class="card-title">
-                    <h2 class="mb-0 text-uppercase text-right"> New Journal</h2>
-                  </div>
-              </div>
-            </div> -->
+
       <h2 class="mb-0 text-uppercase text-right"> New Journal</h2>
+
+      <a href="{% url 'manual_journal_home' %}" class="btn btn-light" style="color: white; background-color: #010101; margin-left: 750px;width: 40px;">
+        <i class="fa fa-times-circle"></i>
+      </a>
       <div class="col-md-12">
         <form method="POST" action="{% url 'add_journal' %}" class="custom-form" enctype="multipart/form-data">
           {% csrf_token %}
@@ -72,15 +73,33 @@
               <input type="date" name="date" class="form-control text-dark" required>
             </div>
           </div>
-          <div class="row mt-3 mb-5">
+          <!--<div class="row mt-3 mb-5">
             <div class="col-md-3">
-              <label for="">Journal No:</label>
+              <label for="journalNoInput">Journal No:</label>
             </div>
             <div class="col-md-6">
               <input type="text" name="journal_no" class="form-control text-dark" required id="journalNoInput"><br>
-              <p style="color: rgb(218, 164, 48);">*Journal number starts with 1</p>
-            </div>
+              <div id="validationMessage" class="text-warning"></div> <!-- Validation message element -->
+          <!--</div>
+            <script>
+              document.addEventListener("DOMContentLoaded", function () {
+                const journalNoInput = document.getElementById("journalNoInput");
+                const validationMessage = document.getElementById("validationMessage");
 
+                journalNoInput.addEventListener("input", function () {
+                  const journalNoValue = journalNoInput.value;
+                  const journalNumberPattern = /^JN-\d{3}$/;
+
+                  if (journalNumberPattern.test(journalNoValue)) {
+                    // The input matches the desired format
+                    validationMessage.textContent = ""; // Clear any previous validation messages
+                  } else {
+                    // The input does not match the desired format
+                    validationMessage.textContent = "Journal No should start with 'JN-' followed by a 3-digit number.";
+                  }
+                });
+              });
+            </script>
           </div>
           <div class="row mt-2">
             <div class="col-md-3">
@@ -89,7 +108,7 @@
             <div class="col-md-6">
               <input type="text" name="reference_no" class="form-control text-dark">
             </div>
-          </div>
+          </div>-->
           <!-- <div class="row mt-5 mb-5">
                         <div class="col-md-3">
                                 <label for="">Notes:</label>
@@ -98,6 +117,48 @@
                                 <textarea name="notes" class="form-control text-dark" style="height: 60px;"></textarea>
                             </div>
                         </div> -->
+          <div class="row mt-3 mb-5">
+            <div class="col-md-3">
+              <label for="journalNoInput">Journal No:</label>
+            </div>
+            <div class="col-md-6">
+              <input type="text" name="journal_no" class="form-control text-dark" required id="journalNoInput">
+              <div id="validationMessage" class="text-warning"></div> <!-- Validation message element -->
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-3">
+              <label for="referenceNumber">Reference No:</label>
+            </div>
+            <div class="col-md-6">
+              <input type="text" name="reference_no" class="form-control text-dark" id="referenceNumber">
+            </div>
+          </div>
+          <script>
+            document.addEventListener("DOMContentLoaded", function () {
+              const journalNoInput = document.getElementById("journalNoInput");
+              const referenceNumber = document.getElementById("referenceNumber");
+              const validationMessage = document.getElementById("validationMessage");
+
+              journalNoInput.addEventListener("input", function () {
+                const journalNoValue = journalNoInput.value;
+                const journalNumberPattern = /^JN-\d{3}$/;
+
+                if (journalNumberPattern.test(journalNoValue)) {
+                  // The input matches the desired format
+                  validationMessage.textContent = ""; // Clear any previous validation messages
+
+                  // Generate the reference number
+                  const referenceNoValue = "REF-" + journalNoValue.slice(3); // Remove "JN-" prefix
+                  referenceNumber.value = referenceNoValue;
+                } else {
+                  // The input does not match the desired format
+                  validationMessage.textContent = "*Journal No should start with 'JN-' followed by a 3-digit number.";
+                  referenceNumber.value = ""; // Clear the reference number if validation fails
+                }
+              });
+            });
+          </script>
           <div class="row mt-3 mb-5">
             <div class="col-md-3">
               <label for="">Currency:</label>
@@ -171,7 +232,7 @@
                       });
                     });
                   </script>-->
-                  <div class="content1" id="myDropdown1">
+                  <!--<div class="content1" id="myDropdown1">
 
                     <select id="accountSelect" name="account" class="form-control text-dark">
                       <option value="">Select Account</option>
@@ -180,12 +241,24 @@
                       <option value="{{ account.account_name }}">{{ account.account_name }}</option>
                       {% endfor %}
                     </select>
-                  </div>
+                  </div>-->
+                  <select id="accountSelect" name="account" class="form-control text-dark">
+                    <option value="">Select Account</option>
+                    <option id="crt_acc"></option>
+                    {% for account in accounts %}
+                    <option value="{{ account.account_name }}">{{ account.account_name }}</option>
+                    {% endfor %}
+                  </select>
 
                 </td>
+                <script>
+                  $(document).ready(function () {
+                    $('#accountSelect').select2();
+                  });
+                </script>
                 <td><input type="text" name="description" class="form-control text-dark"></td>
                 <td>
-                  <select name="contact" class="form-control text-dark">
+                  <select id="contactSelect" class="form-control text-dark">
                     <option value="">Select Contact (INR)</option>
                     {% for customer in customers %}
                     <option value="{{ customer.customerName }}">{{ customer.customerName }}</option>
@@ -194,7 +267,22 @@
                     <option value="{{ vendor.vendor_display_name }}">{{ vendor.vendor_display_name }}</option>
                     {% endfor %}
                   </select>
+
+                  <!--<select name="contact" class="form-control text-dark">
+                    <option value="">Select Contact (INR)</option>
+                    {% for customer in customers %}
+                    <option value="{{ customer.customerName }}">{{ customer.customerName }}</option>
+                    {% endfor %}
+                    {% for vendor in vendors %}
+                    <option value="{{ vendor.vendor_display_name }}">{{ vendor.vendor_display_name }}</option>
+                    {% endfor %}
+                  </select>-->
                 </td>
+                <script>
+                  $(document).ready(function () {
+                    $('#contactSelect').select2();
+                  });
+                </script>
                 <td><input type="number" name="debits" class="form-control text-dark" onchange="calculateTotals()"></td>
                 <td><input type="number" name="credits" class="form-control text-dark" onchange="calculateTotals()">
                 </td>
