@@ -106,7 +106,7 @@
   <!-- </div> -->
   <div class="container-fluid mt-4">
     <div class="row">
-      <div class="col-md-4 vertical-separator" >
+      <div class="col-md-4 vertical-separator">
         <div class="d-flex justify-content-between align-items-center">
           <div class="search-bar">
             <div class="col-md-12">
@@ -116,8 +116,8 @@
             </div>
           </div>
           <div class="dropdown">
-            <button class="btn btn-dark border-primary" style="color: #F86F03;" type="button" id="filterDropdown"
-              data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-dark border-warning" style="color: #F86F03;height: 40px;" type="button"
+              id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fa fa-filter"></i>
             </button>
             <ul class="dropdown-menu bg-dark" aria-labelledby="filterDropdown">
@@ -128,11 +128,11 @@
               </li>
             </ul>
           </div>
-          <a href="{% url 'add_journal' %}" class="btn btn-dark border-primary" style="color: #F86F03;"><i
-              class="fa fa-plus"></i></a>
+          <a href="{% url 'add_journal' %}" class="p-2 btn btn-dark border-warning"
+            style="color: #F86F03;height: 40px;width: 40px;"><i class="fa fa-plus"></i></a>
         </div>
         <hr>
-        <div class="list-group mt-3" id="slipTemplate">
+        <div class="list-group mt-3">
           {% for journal in journals %}
           <a href="#" class="list-item {% if selected_journal_id == journal.id %}active{% endif %}"
             data-journal-id="{{ journal.id }}">
@@ -158,44 +158,58 @@
       <div class="col-md-8">
         <div class="d-flex justify-content-between align-items-center">
           <div>
-            <button style="background-color: rgb(210, 132, 30); color: white;"
+            <button style="background-color: black;color: #F86F03;border-color: #F86F03;"
               class="btn btn-overview">Overview</button>
-            <button style="background-color: rgb(210, 132, 30); color: white;"
+            <button style="background-color: black;color: #F86F03;border-color: #F86F03;"
               class="btn btn-template">Template</button>
           </div>
 
           <div>
 
-            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-save">Save</button>
-            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-comment"
+            <button style="background-color: black;color: #F86F03;border-color: #F86F03;" class="btn btn-save">Save</button>
+            <button style="background-color: black;color: #F86F03;border-color: #F86F03;" class="btn btn-comment"
               data-toggle="modal" data-target="#commentModal"><i class="fa fa-comments" aria-hidden="true"></i></button>
-            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-edit"><i
+            <button style="background-color: black;color: #F86F03;border-color: #F86F03;" class="btn btn-edit"><i
                 class="fa fa-edit" aria-hidden="true"></i></button>
-            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-save-pdf"><i
+            <button style="background-color: black;color: #F86F03;border-color: #F86F03;" class="btn btn-save-pdf"><i
                 class="fa fa-file-pdf" aria-hidden="true"></i></button>
-            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-print"><i
+            <button style="background-color: black;color: #F86F03;border-color: #F86F03;" class="btn btn-print"><i
                 class="fa fa-print" aria-hidden="true"></i></button>
-            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-attachment"><i
+            <button style="background-color: black;color: #F86F03;border-color: #F86F03;" class="btn btn-attachment"><i
                 class="fa fa-paperclip" aria-hidden="true"></i></button>
-            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-delete"><i
+            <button style="background-color: black;color: #F86F03;border-color: #F86F03;" class="btn btn-delete"><i
                 class="fa fa-trash" aria-hidden="true"></i></button>
-            <button style="background-color: rgb(210, 132, 30); color: white;" class="btn btn-slip"><i
-                class="fa fa-file-text" aria-hidden="true"></i> Slip</button>
+            <button style="background-color: black;color: #F86F03;border-color: #F86F03;" class="btn btn-slip"><i
+                class="fa fa-file-text" aria-hidden="true"></i></button>
           </div>
           <script>
             document.addEventListener("DOMContentLoaded", function () {
               const slipButton = document.querySelector('.btn-slip');
-              const slipTemplate = document.getElementById('slipTemplate');
 
               slipButton.addEventListener('click', function () {
-                // Display the slip template
-                slipTemplate.style.display = 'block';
+                // Get the slip content from the relevant section
+                const slipContent = document.querySelector('.details-section').innerHTML;
 
-                // Print the slip
-                window.print();
+                // Create a Blob containing the slip content
+                const blob = new Blob([slipContent], { type: 'text/html' });
 
-                // Hide the slip template after printing
-                slipTemplate.style.display = 'none';
+                // Create a link element
+                const link = document.createElement('a');
+
+                // Set the link's href to the Blob URL
+                link.href = URL.createObjectURL(blob);
+
+                // Set the link's download attribute and filename
+                link.download = 'slip.html';
+
+                // Append the link to the document
+                document.body.appendChild(link);
+
+                // Trigger a click on the link to start the download
+                link.click();
+
+                // Remove the link from the document
+                document.body.removeChild(link);
               });
             });
           </script>
@@ -656,8 +670,8 @@
 
     <div class="row justify-content-center">
       <div class="col-md-11">
-        <h2 class="left-align text-dark">${data.company_name}</h2>
-        <p class="left-align text-secondary">${data.address}</p>
+        <h2 class="text-center text-dark">${data.company_name}</h2>
+        <p class="text-center text-secondary">${data.address}</p>
         <hr class="bg-secondary">
         <div class="text-center">
             <div class="left-section">

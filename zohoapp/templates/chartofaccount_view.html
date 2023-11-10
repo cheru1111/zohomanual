@@ -231,89 +231,84 @@
 
 <div class="container-fluid mt-4">
   <div class="row">
-      <div class="col-md-4 vertical-separator">
-          <div class="d-flex justify-content-between align-items-center">
-              <div class="search-bar">
-                  <form action="" method="GET" class="input-group">
-                      <input type="text" id="myyInput" onkeyup="myyFunction()" placeholder="Search..."
-                          class="form-control custom-height text-dark">
-                  </form>
+    <div class="col-md-4 vertical-separator">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="search-bar">
+          <form action="" method="GET" class="input-group">
+            <input type="text" id="myyInput" onkeyup="myyFunction()" placeholder="Search..."
+              class="form-control custom-height text-dark">
+          </form>
+        </div>
+
+        <div class="filter-button" onclick="toggleDropdown()">
+          <button class="btn btn-outline-warning text-right px-3 py-2" style="height: 38px;" type="button">
+            <i class="fa fa-filter"></i>
+          </button>
+          <div class="content" id="myDropdown" style="width: 300px;">
+            <div class="search">
+              <input type="text" placeholder="Search" id="myInput" onkeyup="filterFunction()">
+            </div>
+            <ul class="options">
+              <div class="opt">
+                <span style="font-weight: bold;">Assets</span>
+                <li onclick="selectOption('Other Assets')">Other Assets </li>
+                <li onclick="selectOption('Other Current Asset')">Other Current Asset</li>
+                <li onclick="selectOption('Cash')">Cash </li>
+                <li onclick="selectOption('Bank')">Bank </li>
+                <li onclick="selectOption('Fixed Asset')">Fixed Asset</li>
+                <li onclick="selectOption('Stock')">Stock </li>
+                <li onclick="selectOption('Payment Clearing')">Payment Clearing </li>
+
               </div>
 
-              <div class="filter-button" onclick="toggleDropdown()">
-                  <button class="btn btn-outline-warning text-right px-3 py-2" style="height: 38px;" type="button" >
-                      <i class="fa fa-filter"></i>
-                  </button>
-                  <div class="content" id="myDropdown" style="width: 300px;">
-                      <div class="search">
-                          <input type="text" placeholder="Search" id="myInput" onkeyup="filterFunction()">
-                      </div>
-                      <ul class="options">
-                          <!-- Your filter options here -->
-                          <div class="opt">
-                            <span style="font-weight: bold;">Assets</span>
-                            <li>Other Assets </li>
-                            <li>Other Current Asset</li>
-                            <li>Cash </li>
-                            <li>Bank </li>
-                            <li>Fixed Asset</li>
-                            <li>Stock </li>
-                            <li>Payment Clearing </li>
-            
-                          </div>
-            
-                          <div class="opt">
-                            <span style="font-weight: bold;">Liability</span>
-                            <li>Other Liability </li>
-                            <li>Other Current Liability</li>
-                            <li>Credit Card</li>
-                            <li>Long Term Liability</li>
-                            <li>Overseas Tax Pyable</li>
-                          </div>
-            
-                          <div class="opt">
-                            <span style="font-weight: bold;">Equity</span>
-                            <li>Equity</li>
-                          </div>
-            
-                          <div class="opt">
-                            <span style="font-weight: bold;">Income</span>
-                            <li>Income</li>
-                            <li>Other Income</li>
-                          </div>
-            
-                          <div class="opt">
-                            <span style="font-weight: bold;">Expense</span>
-                            <li>Expense</li>
-                            <li>Cost Of Goods Sold</li>
-                            <li>Other Expense</li>
-                          </div>
-                      </ul>
-                  </div>
+              <div class="opt">
+                <span style="font-weight: bold;">Liability</span>
+                <li onclick="selectOption('Other Liability')">Other Liability </li>
+                <li onclick="selectOption('Other Current Liability')">Other Current Liability</li>
+                <li onclick="selectOption('Credit Card')">Credit Card</li>
+                <li onclick="selectOption('Long Term Liability')">Long Term Liability</li>
+                <li onclick="selectOption('Overseas Tax Payable')">Overseas Tax Payable</li>
               </div>
 
-              <a href="{% url 'create_new_chart_of_account' %}" class="btn btn-outline-warning text-right px-3 py-2"
-                  style="height: 38px;">
-                  <i class="fa fa-plus"></i>
-              </a>
+              <div class="opt">
+                <span style="font-weight: bold;">Equity</span>
+                <li onclick="selectOption('Equity')">Equity</li>
+              </div>
+
+              <div class="opt">
+                <span style="font-weight: bold;">Income</span>
+                <li onclick="selectOption('Income')">Income</li>
+                <li onclick="selectOption('Other Income')">Other Income</li>
+              </div>
+
+              <div class="opt">
+                <span style="font-weight: bold;">Expense</span>
+                <li onclick="selectOption('Expense')">Expense</li>
+                <li onclick="selectOption('Cost of Goods Sold')">Cost Of Goods Sold</li>
+                <li onclick="selectOption('Other Expense')">Other Expense</li>
+              </div>
+            </ul>
           </div>
+        </div>
+
+        <a href="{% url 'create_new_chart_of_account' %}" class="btn btn-outline-warning text-right px-3 py-2"
+          style="height: 38px;">
+          <i class="fa fa-plus"></i>
+        </a>
       </div>
+    </div>
   </div>
 </div>
-
-
-
-<script>
+<!--<script>
   function toggleDropdown() {
-    var dropdown = document.getElementById("myDropdown");
-    if (dropdown.style.display === "block") {
-      dropdown.style.display = "none";
-    } else {
-      dropdown.style.display = "block";
-    }
+      var dropdown = document.getElementById("myDropdown");
+      if (dropdown.style.display === "block") {
+          dropdown.style.display = "none";
+      } else {
+          dropdown.style.display = "block";
+      }
   }
-</script>
-<script>
+
   function filterFunction() {
       var input, filter, ul, li, a, i;
       input = document.getElementById("myInput");
@@ -329,7 +324,41 @@
           }
       }
   }
-  </script>
+
+  function selectOption(option) {
+      console.log("Selected option: " + option);
+      // Add your logic for handling the selected option here
+      // For example, you might want to update the UI or perform an action based on the selected option
+      toggleDropdown(); // Close the dropdown after selecting an option
+  }
+
+  // Close the dropdown if the user clicks outside of it
+  window.onclick = function(event) {
+      if (!event.target.matches('.btn-outline-warning')) {
+          var dropdowns = document.getElementsByClassName("content");
+          var i;
+          for (i = 0; i < dropdowns.length; i++) {
+              var openDropdown = dropdowns[i];
+              if (openDropdown.style.display === 'block') {
+                  openDropdown.style.display = 'none';
+              }
+          }
+      }
+  }
+</script>-->
+
+
+<script>
+  function toggleDropdown() {
+    var dropdown = document.getElementById("myDropdown");
+    if (dropdown.style.display === "block") {
+      dropdown.style.display = "none";
+    } else {
+      dropdown.style.display = "block";
+    }
+  }
+</script>
+
 <script>
   function filterFunction() {
     var input, filter, ul, li, a, i, b, j;
@@ -367,8 +396,23 @@
 </script>
 
 
-
-
+<!--<script>
+  function filterFunction() {
+      var input, filter, ul, li, a, i;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      ul = document.querySelector(".options");
+      li = ul.getElementsByTagName("li");
+      for (i = 0; i < li.length; i++) {
+          a = li[i];
+          if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+              li[i].style.display = "";
+          } else {
+              li[i].style.display = "none";
+          }
+      }
+  }
+  </script>-->
 
 
 
@@ -635,7 +679,7 @@
       </div>
       <div class="col-sm-7 p-4 text-white text-right my-auto">
         <div class="btn-group" role="group" aria-label="Basic example">
-          <a href="{% url 'edit_chart_of_account' view.id %}" data-toggle="modal" data-target="#edit_account" class="btn btn-outline-dark text-right px-3 py-2"
+          <a href="{% url 'create_edit_chart_of_account' ind.id %}" class="btn btn-outline-dark text-right px-3 py-2"
             title="Edit">
             <i class="mdi mdi-pencil"></i></a>
           <a href="" class="btn btn-outline-dark text-right px-3 py-2" data-toggle="modal" data-target="#upload_account"
@@ -3869,7 +3913,7 @@
     }
   }
 </script>
-<!--<script>
+<script>
   function myyFunction() {
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("myyInput");
@@ -3889,7 +3933,7 @@
       }
     }
   }
-</script>-->
+</script>
 
 
 <!--<script>

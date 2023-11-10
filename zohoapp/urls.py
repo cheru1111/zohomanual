@@ -285,7 +285,7 @@ urlpatterns = [
 
     path('chartofaccount_home',views.chartofaccount_home,name='chartofaccount_home'),
     path('create_account',views.create_account,name='create_account'),
-    path('chartofaccount_view/<int:id>',views.chartofaccount_view,name='chartofaccount_view'),
+    path('chartofaccount_view/<int:pk>',views.chartofaccount_view,name='chartofaccount_view'),
     path('create_account_view',views.create_account_view,name='create_account_view'),
     path('edit_chart_of_account/<int:pk>',views.edit_chart_of_account,name="edit_chart_of_account"),
     path('upload_chart_of_account/<int:pk>',views.upload_chart_of_account,name="upload_chart_of_account"),
@@ -903,7 +903,7 @@ urlpatterns = [
     path('view_chart_of_accounts_active',views.view_chart_of_accounts_active,name='view_chart_of_accounts_active'),
     path('view_chart_of_accounts_none',views.view_chart_of_accounts_none,name='view_chart_of_accounts_none'),
     path('create_new_chart_of_account',views.create_new_chart_of_account,name='create_new_chart_of_account'),
-    path('edit_chart_of_account/<int:id>',views.edit_chart_of_account,name='edit_chart_of_account'),
+    path('create_edit_chart_of_account/<int:pk>',views.create_edit_chart_of_account,name='create_edit_chart_of_account'),
 
     #End
     

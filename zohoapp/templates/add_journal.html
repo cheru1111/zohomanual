@@ -266,6 +266,9 @@
                     {% for vendor in vendors %}
                     <option value="{{ vendor.vendor_display_name }}">{{ vendor.vendor_display_name }}</option>
                     {% endfor %}
+                    {% for emp in employee %}
+                    <option value="{{ emp.first_name}}{{ emp.last_name}}">{{ emp.first_name}} {{ emp.last_name}}</option>
+                    {% endfor %}
                   </select>
 
                   <!--<select name="contact" class="form-control text-dark">

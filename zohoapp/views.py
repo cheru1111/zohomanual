@@ -7612,9 +7612,10 @@ def view_chart_of_accounts_none(request):
 def create_new_chart_of_account(request):
     return render(request,'create_new_chart_of_account.html') 
 
-def edit_chart_of_account(request,id):
-    view=Chart_of_Account.objects.get(id=id)
-    return render(request,'edit_chart_of_account.html',{"view":view})        
+def create_edit_chart_of_account(request,pk):
+    ind=Chart_of_Account.objects.get(id=pk)
+    return render(request,'edit_chart_of_account.html',{"ind":ind})
+     
 
 
 def create_account(request):
@@ -7719,14 +7720,14 @@ def create_account(request):
 
 
 
-def chartofaccount_view(request,id):
+def chartofaccount_view(request,pk):
     company=company_details.objects.get(user=request.user)
     cur_user = request.user
     user = User.objects.get(id=cur_user.id)
     # view=Chart_of_Account.objects.filter(user=user)
     # ind=Chart_of_Account.objects.get(user=user,id=id)
     view=Chart_of_Account.objects.all()
-    ind=Chart_of_Account.objects.get(id=id)
+    ind=Chart_of_Account.objects.get(id=pk)
 
     doc=Chart_of_Account_Upload.objects.filter(account=ind)
     print(view)
@@ -14668,6 +14669,7 @@ def add_journal(request):
     accounts = Chart_of_Account.objects.all()
     vendors = vendor_table.objects.all()
     customers = customer.objects.all()
+    employee=Payroll.objects.all()
 
     try:
         company = company_details.objects.get(user=request.user)
@@ -14738,7 +14740,7 @@ def add_journal(request):
 
         return redirect('manual_journal_home')
 
-    return render(request, 'add_journal.html', {'accounts': accounts, 'vendors': vendors,'customers': customers, 'company_name': company_name,'address': address,'company' : company})
+    return render(request, 'add_journal.html', {'accounts': accounts, 'vendors': vendors,'customers': customers, 'company_name': company_name,'address': address,'company' : company,'employee':employee})
     
 @login_required(login_url='login')
 def journal_account_dropdown(request):
