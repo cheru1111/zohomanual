@@ -14912,7 +14912,7 @@ def update_journal_status(request, journal_id):
     if request.method == 'POST':
         try:
             selected_journal = Journal.objects.get(id=journal_id)
-            selected_journal.status = 'published'
+            selected_journal.status = 'save'
             selected_journal.save()
 
             return JsonResponse({'message': 'Journal status updated successfully.'})
