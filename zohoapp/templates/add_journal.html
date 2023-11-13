@@ -14,6 +14,10 @@
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
+
 <style>
   .custom-form {
     max-width: 900px;
@@ -58,7 +62,8 @@
 
       <h2 class="mb-0 text-uppercase text-right"> New Journal</h2>
 
-      <a href="{% url 'manual_journal_home' %}" class="btn btn-light" style="color: white; background-color: #010101; margin-left: 750px;width: 40px;">
+      <a href="{% url 'manual_journal_home' %}" class="btn btn-light"
+        style="color: white; background-color: #010101; margin-left: 750px;width: 40px;">
         <i class="fa fa-times-circle"></i>
       </a>
       <div class="col-md-12">
@@ -242,8 +247,9 @@
                       {% endfor %}
                     </select>
                   </div>-->
-                  <select id="accountSelect" name="account" class="form-control text-dark">
-                    <option value="">Select Account</option>
+                  <select id="contactSelect" class="form-control text-dark">
+                    <option value="">Select Contact (INR)</option>
+                    <option value="search-container" disabled>Search Container</option>
                     <option id="crt_acc"></option>
                     {% for account in accounts %}
                     <option value="{{ account.account_name }}">{{ account.account_name }}</option>
@@ -257,7 +263,7 @@
                   });
                 </script>
                 <td><input type="text" name="description" class="form-control text-dark"></td>
-                <td>
+                <!--<td>
                   <select id="contactSelect" class="form-control text-dark">
                     <option value="">Select Contact (INR)</option>
                     {% for customer in customers %}
@@ -269,9 +275,9 @@
                     {% for emp in employee %}
                     <option value="{{ emp.first_name}}{{ emp.last_name}}">{{ emp.first_name}} {{ emp.last_name}}</option>
                     {% endfor %}
-                  </select>
+                  </select>-->
 
-                  <!--<select name="contact" class="form-control text-dark">
+                <!--<select name="contact" class="form-control text-dark">
                     <option value="">Select Contact (INR)</option>
                     {% for customer in customers %}
                     <option value="{{ customer.customerName }}">{{ customer.customerName }}</option>
@@ -280,7 +286,95 @@
                     <option value="{{ vendor.vendor_display_name }}">{{ vendor.vendor_display_name }}</option>
                     {% endfor %}
                   </select>-->
+                <!--</td>-->
+                <td>
+                  <select id="contactSelect" class="form-control text-dark" oninput="myyFunction()">
+                    <option value="">Select Contact (INR)</option>
+                    <option value="search-container" disabled>Search Container</option>
+                    {% for customer in customers %}
+                    <option value="{{ customer.customerName }}">{{ customer.customerName }}</option>
+                    {% endfor %}
+                    {% for vendor in vendors %}
+                    <option value="{{ vendor.vendor_display_name }}">{{ vendor.vendor_display_name }}</option>
+                    {% endfor %}
+                    {% for emp in employee %}
+                    <option value="{{ emp.first_name}}{{ emp.last_name}}">{{ emp.first_name}} {{ emp.last_name}}
+                    </option>
+                    {% endfor %}
+                  </select>
+
                 </td>
+                <script>
+                 // $(document).ready(function () {
+                   // $('#contactSelect').select2({
+                   //   placeholder: 'Select Contact (INR)'
+                   // });
+                 // });
+
+                  function myyFunction() {
+                    var input, filter, option, i, txtValue;
+                    input = document.getElementById("contactSelect");
+                    filter = input.value.trim().toUpperCase(); // Trim and convert to uppercase
+
+                    // Set the minimum length for the search term
+                    var minLength = 2;
+
+                    // Loop through the options in the select dropdown
+                    for (i = 0; i < input.options.length; i++) {
+                      option = input.options[i];
+                      txtValue = option.text || option.innerText;
+
+                      // Check if the text content includes the filter text with the minimum length
+                      if (filter.length >= minLength && txtValue.toUpperCase().includes(filter)) {
+                        option.style.display = "";
+                      } else {
+                        option.style.display = "none";
+                      }
+                    }
+                  }
+                </script>
+                <!--<script>
+                  $(document).ready(function() {
+                    $('#contactSelect').select2({
+                      templateResult: function(data) {
+                        if (data.id === 'search-container') {
+                          return $('<div class="search-container"><input type="text" id="myyInput" oninput="myyFunction()" class="form-control bg-light text-dark" placeholder="Search.." autocomplete="off"></div>');
+                        } else {
+                          return data.text;
+                        }
+                      },
+                      escapeMarkup: function(m) {
+                        return m;
+                      }
+                    });
+                  });
+                
+                  function myyFunction() {
+                    var input, filter, table, tr, td, i, txtValue;
+                
+                    input = document.getElementById("myyInput");
+                    filter = input.value.trim().toUpperCase(); // Trim and convert to uppercase
+                    table = document.getElementById("myTable");
+                    tr = table.getElementsByTagName("tr");
+                
+                    // Set the minimum length for the search term
+                    var minLength = 7;
+                
+                    for (i = 0; i < tr.length; i++) {
+                      td = tr[i].getElementsByTagName("td")[0];
+                      if (td) {
+                        txtValue = td.textContent || td.innerText;
+                
+                        // Check if the text content includes the filter text with the minimum length
+                        if (filter.length >= minLength && txtValue.toUpperCase().includes(filter)) {
+                          tr[i].style.display = "";
+                        } else {
+                          tr[i].style.display = "none";
+                        }
+                      }
+                    }
+                  }
+                </script>-->
                 <script>
                   $(document).ready(function () {
                     $('#contactSelect').select2();
@@ -341,18 +435,19 @@
             <div class="col-md-4">
               <div class="d-flex">
                 <button type="submit" class="btn mt-2 py-2 rounded-pill text-grey w-50 my-4 mx-2"
-                  style="width: 200px; text-align: center;background-color: rgb(218, 164, 48);" onclick="setStatus('save')">Save</button>
+                  style="width: 200px; text-align: center;background-color: rgb(218, 164, 48);">Save</button>
                 <button type="submit" class="btn mt-2 py-2 rounded-pill text-grey w-50 my-4 mx-2"
-                  style="width: 200px; text-align: center;background-color: rgb(218, 164, 48);" onclick="setStatus('draft')">Draft</button>
+                  style="width: 200px; text-align: center;background-color: rgb(218, 164, 48);">Draft</button>
                 <button type="button" class="btn rounded-pill text-grey w-50 my-4 mt-2 py-2" onclick="clearForm()"
                   style="background-color: rgb(218, 164, 48);">Clear</button>
               </div>
             </div>
           </div>
           <script>
-            function setStatus(value) {
-                document.getElementById('status-input').value = value;
-            }
+          document.getElementById("myForm").addEventListener("submit", function(event) {
+            // Your form submission logic here
+            event.preventDefault(); // Prevent the default form submission behavior
+          });
         </script>
         </form>
       </div>

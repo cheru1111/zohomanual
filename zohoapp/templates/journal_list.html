@@ -571,56 +571,162 @@
       html2pdf().from(element).set(pdfOptions).save();
     });
 
-    $('.btn-print').click(function () {
-      const detailsSection = $('.details-section');
+    //$('.btn-print').click(function () {
+      //const detailsSection = $('.details-section');
 
       // Get the HTML content of the details-section
-      const printableContent = detailsSection.html();
+     // const printableContent = detailsSection.html();
 
-      const iframe = document.createElement('iframe');
-      iframe.style.display = 'none';
-      document.body.appendChild(iframe);
-      const doc = iframe.contentWindow.document;
-      doc.open();
-      doc.write(`
-        <html>
-          <head>
-            <title>Print</title>
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-            <!-- Add any additional styles needed for printing -->
-            <style>
-              .text-center {
-    display: flex;
-    justify-content: space-between;
-  }
+      //const iframe = document.createElement('iframe');
+   //   iframe.style.display = 'none';
+     // document.body.appendChild(iframe);
+   //   const doc = iframe.contentWindow.document;
+    //  doc.open();
+    //  doc.write(`
+    //    <html>
+     //     <head>
+     //       <title>Print</title>
+     //       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+      //      <!-- Add any additional styles needed for printing -->
+      //      <style>
+      //        .text-center {
+   // display: flex;
+  //  justify-content: space-between;
+ // }
 
-  .left-section {
-    text-align: left;
-  }
+  //.left-section {
+  //  text-align: left;
+ // }
 
-  .right-section {
-    text-align: right;
-  }
-  footer {
-      display: flex;
-      justify-content: center;
-    }
-  </style>
-          </head>
-          <body>
-            ${printableContent}
-          </body>
-        </html>
-      `);
-      doc.close();
+  //.right-section {
+  //  text-align: right;
+ // }
+  //footer {
+   //   display: flex;
+    //  justify-content: center;
+   // }
+  //</style>
+       //   </head>
+       //   <body>
+       //     ${printableContent}
+       //   </body>
+       // </html>
+     // `);
+     // doc.close();
       // Wait for the content to be fully loaded before printing
-      iframe.onload = function () {
-        iframe.contentWindow.print();
+      //iframe.onload = function () {
+       // iframe.contentWindow.print();
 
         // Remove the iframe from the DOM after printing is done
-        document.body.removeChild(iframe);
-      };
-    });
+       // document.body.removeChild(iframe);
+     // };
+    //});-->
+
+    $('.btn-print').click(function () {
+  const detailsSection = $('.details-section');
+
+  // Get the HTML content of the details-section
+  const printableContent = detailsSection.html();
+
+  // Create an array of formats
+  const formats = [
+    { title: 'Format 1', content: '<div>Content for Format 1</div>' },
+    { title: 'Format 2', content: '<div>Content for Format 2</div>' },
+    { title: 'Format 3', content: '<div>Content for Format 3</div>' }
+  ];
+
+  // Create an iframe for each format
+  formats.forEach((format, index) => {
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    const doc = iframe.contentWindow.document;
+    doc.open();
+    doc.write(`
+      <html>
+        <head>
+          <title>${format.title}</title>
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+          <!-- Add any additional styles needed for printing -->
+          <style>
+            @media print {
+              body {
+                margin: 0;
+                padding: 0;
+              }
+
+              .text-center {
+                display: flex;
+                justify-content: space-between;
+              }
+
+              .left-section {
+                text-align: left;
+              }
+
+              .right-section {
+                text-align: right;
+              }
+
+              footer {
+                display: flex;
+                justify-content: space-between;
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+              }
+
+              .page-number {
+                text-align: center;
+              }
+
+              .page-break {
+                page-break-before: always;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="printable-content">
+            <!-- Content specific to each format goes here -->
+            <div class="format${index + 1}">
+              ${format.content}
+            </div>
+            <div class="footer">
+              <span class="page-number"></span>
+            </div>
+          </div>
+        </body>
+      </html>
+    `);
+    doc.close();
+
+    // Add the printable content
+    doc.querySelector('.format' + (index + 1)).innerHTML = printableContent;
+
+    // Wait for the content to be fully loaded before printing
+    iframe.onload = function () {
+      // Add page numbers
+      const pageCount = iframe.contentDocument.querySelectorAll('.format' + (index + 1)).length;
+      const footer = iframe.contentDocument.querySelector('.footer');
+      for (let i = 0; i < pageCount; i++) {
+        const pageNumberSpan = iframe.contentDocument.createElement('span');
+        pageNumberSpan.textContent = `Page ${i + 1} of ${pageCount}`;
+        footer.appendChild(pageNumberSpan);
+
+        if (i < pageCount - 1) {
+          footer.appendChild(document.createElement('span')).textContent = ' | ';
+        }
+      }
+
+      // Print the iframe
+      iframe.contentWindow.print();
+
+      // Remove the iframe from the DOM after printing is done
+      document.body.removeChild(iframe);
+    };
+  });
+});
 
     $('.btn-attachment').click(function () {
       const selectedJournalId = $('.list-item.active').data('journal-id');

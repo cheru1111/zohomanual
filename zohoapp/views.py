@@ -14717,6 +14717,8 @@ def add_journal(request):
             contact = contact_list[i]
             debits = debits_list[i]
             credits = credits_list[i]
+            print(debits)
+            print(credits)
 
             journal_entry = JournalEntry(
                 journal=journal,

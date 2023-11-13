@@ -1430,6 +1430,8 @@ class Journal(models.Model):
 
     def __str__(self):
         return self.journal_no
+
+
         
         
 class JournalEntry(models.Model):
